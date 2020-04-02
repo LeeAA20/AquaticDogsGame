@@ -13,11 +13,6 @@ public class BulletController : MonoBehaviour
         
     }
 
-    public void OnEnable()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

@@ -33,6 +33,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(DeathSequence());
     }
 
+    //IEnumerators run in the background, and can continue to run while other proccesses (like update) execute. The "WaitForSeconds()" method is only useable within an IEnumerator
     public IEnumerator DeathSequence()
     {
         Renderer renderer = GetComponent<Renderer>();
