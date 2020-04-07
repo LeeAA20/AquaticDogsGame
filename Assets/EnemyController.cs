@@ -8,10 +8,13 @@ public class EnemyController : MonoBehaviour
     public float flashDelayLength = 0.2f;
     Renderer renderer;
 
+    public AudioSource impactSound;
+
     // Start is called before the first frame update
     void Start()
     {
         renderer = GetComponent<Renderer>();
+        impactSound = GetComponent<AudioSource>();
     }
 
     public void OnEnable()
@@ -30,6 +33,7 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
+        impactSound.Play();
         StartCoroutine(DeathSequence());
     }
 
