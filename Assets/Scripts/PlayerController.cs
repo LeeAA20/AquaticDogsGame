@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
     public float handDist = 1.5f;
 
     public float recoilForce = 0.5f;
-    
+
+    public int health = 5;
+
     public GameObject hand;
 
     Rigidbody2D rb;
@@ -65,5 +67,18 @@ public class PlayerController : MonoBehaviour
         bullet.SetActive(true);
         if(enableBulletRecoil)
             rb.AddForce(-bullet.transform.right * recoilForce, ForceMode2D.Impulse);
+    }
+
+    public void GotHit()
+    {
+        health--;
+        if (health <= 0)
+            GameOver();
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over!");
+        UnityEditor.EditorApplication.isPaused = true;
     }
 }

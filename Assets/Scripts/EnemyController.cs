@@ -12,6 +12,10 @@ public class EnemyController : MonoBehaviour
     public float flashDelayLength = 0.2f;
 
     public float handDist = 1.5f;
+    [Tooltip("The speed that enemies move their weapons to face the player")]
+    public float aimSpeed = 0.7f;
+    [Tooltip("Time in seconds between enemy shots")]
+    public float fireDelay = 3;
 
     public GameObject hand;
     GameObject player;
@@ -28,6 +32,7 @@ public class EnemyController : MonoBehaviour
     {
         GetComponent<Renderer>().enabled = true;
         StartCoroutine(FadeIn(GetComponent<SpriteRenderer>(), fadeInDuration));
+        StartCoroutine(Attack());
     }
 
     // Update is called once per frame
@@ -39,7 +44,7 @@ public class EnemyController : MonoBehaviour
         // Get Angle in Degrees
         float AngleDeg = (180 / Mathf.PI) * AngleRad;
         // Rotate Object
-        hand.transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
+        hand.transform.rotation = Quaternion.Lerp(hand.transform.rotation, Quaternion.Euler(0, 0, AngleDeg), aimSpeed);
         hand.transform.position = transform.position + hand.transform.TransformDirection(Vector2.right) * handDist;
     }
 
@@ -47,6 +52,15 @@ public class EnemyController : MonoBehaviour
     {
         impactSound.Play();
         StartCoroutine(DeathSequence());
+    }
+
+    public void Shoot()
+    {
+        GameObject bullet = GameManager.GetBullet();
+        bullet.transform.position = hand.transform.position;
+        bullet.transform.rotation = hand.transform.rotation;
+        bullet.GetComponent<BulletController>().isEnemyBullet = true;
+        bullet.SetActive(true);
     }
 
     //IEnumerators run in the background, and can continue to run while other proccesses (like update) execute. The "WaitForSeconds()" method is only useable within an IEnumerator
@@ -79,6 +93,15 @@ public class EnemyController : MonoBehaviour
             myRenderer.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, alpha);
             //Wait for a frame
             yield return null;
+        }
+    }
+
+    IEnumerator Attack()
+    {
+        while(isActiveAndEnabled)
+        {
+            yield return new WaitForSeconds(fireDelay);
+            Shoot();
         }
     }
 }
