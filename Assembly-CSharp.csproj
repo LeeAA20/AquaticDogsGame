@@ -63,10 +63,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BulletController.cs" />
-    <Compile Include="Assets\EnemyController.cs" />
-    <Compile Include="Assets\GameManager.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\BulletController.cs" />
+    <Compile Include="Assets\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\ScrollScript.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/iann20/Desktop/SeniorYear/GOA/AquaticDawgs_GameJam2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
