@@ -17,7 +17,7 @@ public class ScrollScript : MonoBehaviour
     {
         transform.Translate(new Vector3(0, 1, 0) * speed* Time.deltaTime);
 
-        if (transform.position.y < -20.367695) {
+        if (transform.position.y < -16.367695) {
             transform.position = startPos;
         }
     }

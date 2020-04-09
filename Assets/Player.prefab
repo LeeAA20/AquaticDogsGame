@@ -47,9 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f241000e4b21aaf4181bef3e14ef2fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableBulletRecoil: 1
+  useBasicMovement: 0
   turnSpeed: 1
   moveSpeed: 0.15
   handDist: 1
+  recoilForce: 0.5
+  health: 5
   hand: {fileID: 2887177719021152558}
 --- !u!61 &2887177718738540809
 BoxCollider2D:
@@ -133,9 +137,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -260556441
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ddcac1fac1f5c8943a30c2ef6b724062, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
