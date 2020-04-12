@@ -79,6 +79,5 @@ public class PlayerController : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("Game Over!");
-        UnityEditor.EditorApplication.isPaused = true;
     }
 }

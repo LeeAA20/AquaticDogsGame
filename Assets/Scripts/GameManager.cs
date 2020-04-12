@@ -6,6 +6,14 @@ public class GameManager : MonoBehaviour
 {
     //VARIABLES
     //annoyingly static variables don't show up in the inspector so you have to change the values in code
+    public Sprite enemyBulletTexture;
+    public Sprite playerBulletTexture;
+    public static Sprite enemyBulletTex;
+    public static Sprite playerBulletTex;
+
+    public Canvas UICanvas;
+    public static Canvas UserInterface;
+    
     public static int maxBullets = 100;
     static GameObject[] playerBullets = new GameObject[maxBullets];
     public GameObject playerBullet;
@@ -24,6 +32,10 @@ public class GameManager : MonoBehaviour
     //METHODS
     void Start()
     {
+        UserInterface = UICanvas;
+        enemyBulletTex = enemyBulletTexture;
+        playerBulletTex = playerBulletTexture;
+
         player = GameObject.FindGameObjectWithTag("Player");
         for(int i = 0; i < maxBullets; i++)
         {
@@ -38,6 +50,17 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(SpawnEnemies());
+    }
+
+    public static void DrawHealthUI()
+    {
+        Transform healthBar = GameObject.FindGameObjectWithTag("HealthBar").transform;
+        foreach (Transform child in healthBar)
+            Destroy(child);
+        for(int i = 0; i < player.GetComponent<PlayerController>().health; i++)
+        {
+            //draw heart images as children of the healthbar - only draw as many as the player has health, obviously
+        }
     }
 
     public static GameObject GetBullet()

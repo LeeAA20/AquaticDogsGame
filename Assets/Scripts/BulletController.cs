@@ -16,6 +16,14 @@ public class BulletController : MonoBehaviour
         impactSound = GetComponent<AudioSource>();
     }
 
+    private void OnEnable()
+    {
+        if (isEnemyBullet)
+            GetComponent<SpriteRenderer>().sprite = GameManager.enemyBulletTex;
+        else
+            GetComponent<SpriteRenderer>().sprite = GameManager.playerBulletTex;
+    }
+
     // Update is called once per frame
     void Update()
     {
