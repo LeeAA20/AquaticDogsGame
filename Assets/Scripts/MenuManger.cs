@@ -27,6 +27,6 @@ public class MenuManger : MonoBehaviour
     public void Play()
     {
         //can load scene by scene name (name of .unity file) or load index (order it appears in the scene list when you build the game)
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene(1);
     }
 }

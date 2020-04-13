@@ -52,11 +52,16 @@ public class PlayerController : MonoBehaviour
         // Get Angle in Degrees
         float AngleDeg = (180 / Mathf.PI) * AngleRad;
         // Rotate Object
+        int rotation = (int)Mathf.Sign(90 - Mathf.Abs(AngleDeg));
         hand.transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
         hand.transform.position = transform.position + hand.transform.TransformDirection(Vector2.right) * handDist;
+        hand.transform.localScale = new Vector3(hand.transform.localScale.x, Mathf.Abs(hand.transform.localScale.y) * rotation, hand.transform.localScale.z);
 
         if (Input.GetButtonDown("Fire1"))
             shoot();
+
+
+        GameManager.DrawHealthUI();
     }
 
     public void shoot()
@@ -79,5 +84,24 @@ public class PlayerController : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("Game Over!");
+        StartCoroutine(DeathSequence());
+    }
+
+    public IEnumerator DeathSequence()
+    {
+        Time.timeScale = 0.1f;
+        int deathFlashes = 5;
+        float flashDelayLength = 0.1f;
+        Renderer renderer = GetComponent<Renderer>();
+        for (int i = 0; i < deathFlashes; i++)
+        {
+            renderer.enabled = false;
+            yield return new WaitForSecondsRealtime(flashDelayLength);
+            renderer.enabled = true;
+            yield return new WaitForSecondsRealtime(flashDelayLength);
+        }
+        Time.timeScale = 0;
+        GameManager.gameOver.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

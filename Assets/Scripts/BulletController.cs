@@ -42,6 +42,7 @@ public class BulletController : MonoBehaviour
         if(isEnemyBullet && col.transform.tag == "Player")
         {
             GameManager.player.GetComponent<PlayerController>().GotHit();
+            GameManager.DrawHealthUI();
             gameObject.SetActive(false);
         }
     }

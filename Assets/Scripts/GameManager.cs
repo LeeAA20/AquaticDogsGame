@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     //VARIABLES
     //annoyingly static variables don't show up in the inspector so you have to change the values in code
+    public static GameObject gameOver;
+
     public Sprite enemyBulletTexture;
     public Sprite playerBulletTexture;
     public static Sprite enemyBulletTex;
     public static Sprite playerBulletTex;
+
+    public static GameObject healthIcon;
+    public GameObject heartIcon;
 
     public Canvas UICanvas;
     public static Canvas UserInterface;
@@ -35,6 +41,10 @@ public class GameManager : MonoBehaviour
         UserInterface = UICanvas;
         enemyBulletTex = enemyBulletTexture;
         playerBulletTex = playerBulletTexture;
+        healthIcon = heartIcon;
+
+        gameOver = GameObject.FindGameObjectWithTag("GameOver");
+        gameOver.SetActive(false);
 
         player = GameObject.FindGameObjectWithTag("Player");
         for(int i = 0; i < maxBullets; i++)
@@ -56,17 +66,26 @@ public class GameManager : MonoBehaviour
     {
         Transform healthBar = GameObject.FindGameObjectWithTag("HealthBar").transform;
         foreach (Transform child in healthBar)
-            Destroy(child);
+            if(child.tag == "Health")
+                Destroy(child.gameObject);
         for(int i = 0; i < player.GetComponent<PlayerController>().health; i++)
         {
-            //draw heart images as children of the healthbar - only draw as many as the player has health, obviously
+            GameObject heart = GameObject.Instantiate(healthIcon, healthBar);
+            RectTransform rectTransform = heart.GetComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(0, 1);
+            rectTransform.anchorMax = new Vector2(0, 1);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
+            heart.GetComponent<RectTransform>().anchoredPosition = new Vector3(30 + 50*i, -30, 0);
         }
     }
 
     public static GameObject GetBullet()
     {
         bulletsFired++;
-        return playerBullets[(bulletsFired-1) % maxBullets];
+        GameObject bullet = playerBullets[(bulletsFired - 1) % maxBullets];
+        bullet.SetActive(false);
+        return bullet;
     }
 
     void Update()
@@ -100,5 +119,10 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(1);
             }
         }
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
     }
 }
